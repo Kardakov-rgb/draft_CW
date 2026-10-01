@@ -1,37 +1,107 @@
-/* DEMO-DATEN (frei erfundene Namen). Im echten System kommt die Liste aus der Lernplattform bzw.
-   der Datenbank. Ersatzpunkt: getStudents() durch einen API-Aufruf ersetzen, Rückgabeformat beibehalten.
-   focus = Förderschwerpunkt aus der Datenbank (Schlüssel aus FOCUS in config.js) oder null. */
-const DEMO_STUDENTS = [
-  ["Aylin Demir", "math"],
-  ["Ben Schneider", "german"],
-  ["Clara Wolf", "both"],
-  ["Deniz Yildiz", null],
-  ["Emil Hartmann", "math"],
-  ["Fatima Khalil", "german"],
-  ["Greta Lange", "both"],
-  ["Hannes Roth", "math"],
-  ["Ida Kowalski", null],
-  ["Jonas Berger", "german"],
-  ["Kerem Aydin", "both"],
-  ["Lena Fischer", "math"],
-  ["Mats Becker", "german"],
-  ["Nora Schulz", "both"],
-  ["Omar Haddad", null],
-  ["Paula Neumann", "math"],
-  ["Quentin Vogel", "german"],
-  ["Rana Ahmadi", "both"],
-  ["Samuel Keller", "math"],
-  ["Tamara Jovanović", "german"],
-  ["Umut Çelik", "both"],
-  ["Vera Hoffmann", null],
-  ["Wanja Peters", "math"],
-  ["Yusuf Kaya", "german"],
-  ["Zoe Brandt", "both"],
+/* DEMO-DATEN (frei erfundene Namen). Im echten System kommen KPFs und Kinder aus der Datenbank.
+   ERSATZPUNKTE: getKpfs() und getStudents(kpfId) durch API-Aufrufe ersetzen, Rückgabeformat beibehalten.
+   Eine KPF fasst eine Klasse zusammen. focus = Förderschwerpunkt aus der Datenbank
+   (Schlüssel aus FOCUS in config.js) oder null. */
+const FOCUS_CYCLE = ["math", "german", "both", null];
+
+const DEMO_KPFS = [
+  {
+    id: "kpf-1",
+    name: "KPF Demo 1 (Klasse 5a)",
+    idPrefix: "demo-", // bleibt wie in früheren Demo-Ständen
+    names: [
+      "Aylin Demir",
+      "Ben Schneider",
+      "Clara Wolf",
+      "Deniz Yildiz",
+      "Emil Hartmann",
+      "Fatima Khalil",
+      "Greta Lange",
+      "Hannes Roth",
+      "Ida Kowalski",
+      "Jonas Berger",
+      "Kerem Aydin",
+      "Lena Fischer",
+      "Mats Becker",
+      "Nora Schulz",
+      "Omar Haddad",
+      "Paula Neumann",
+      "Quentin Vogel",
+      "Rana Ahmadi",
+      "Samuel Keller",
+      "Tamara Jovanović",
+      "Umut Çelik",
+      "Vera Hoffmann",
+      "Wanja Peters",
+      "Yusuf Kaya",
+      "Zoe Brandt",
+    ],
+  },
+  {
+    id: "kpf-2",
+    name: "KPF Demo 2 (Klasse 5b)",
+    idPrefix: "demo2-",
+    names: [
+      "Amelie Sommer",
+      "Bilal Öztürk",
+      "Charlotte Engel",
+      "Dario Marino",
+      "Elif Arslan",
+      "Felix Brandt",
+      "Gül Şahin",
+      "Henri Dubois",
+      "Ines Koch",
+      "Jakob Weiß",
+      "Kira Petrov",
+      "Leon Vasić",
+      "Mira Haas",
+      "Nico Thiel",
+      "Olivia Stein",
+      "Piotr Nowak",
+      "Sina Albrecht",
+      "Theo Lindner",
+    ],
+  },
+  {
+    id: "kpf-3",
+    name: "KPF Demo 3 (Klasse 6a)",
+    idPrefix: "demo3-",
+    names: [
+      "Alina Beck",
+      "Bruno Costa",
+      "Cem Yavuz",
+      "Dilara Polat",
+      "Eric Jansen",
+      "Franka Otto",
+      "Gabriel Santos",
+      "Hanna Lorenz",
+      "Ilyas Benali",
+      "Josefine Kraus",
+      "Kaan Erdem",
+      "Lara Möller",
+      "Moritz Sauer",
+      "Nele Franke",
+      "Oskar Winter",
+      "Pia Schubert",
+      "Ramon Diaz",
+      "Selin Korkmaz",
+      "Tim Albers",
+      "Ulla Reimann",
+    ],
+  },
 ];
 
-export const GROUP_NAME = "Demo-Gruppe Klasse 5";
+/** @returns {Promise<{id: string, name: string}[]>} */
+export async function getKpfs() {
+  return DEMO_KPFS.map(({ id, name }) => ({ id, name }));
+}
 
-/** @returns {Promise<{id: string, name: string, focus: string|null}[]>} */
-export async function getStudents() {
-  return DEMO_STUDENTS.map(([name, focus], i) => ({ id: `demo-${i + 1}`, name, focus }));
+/** @returns {Promise<{id: string, name: string, focus: string|null}[]>} Kinder einer KPF */
+export async function getStudents(kpfId) {
+  const kpf = DEMO_KPFS.find((entry) => entry.id === kpfId);
+  return (kpf?.names ?? []).map((name, i) => ({
+    id: `${kpf.idPrefix}${i + 1}`,
+    name,
+    focus: FOCUS_CYCLE[(i * 7 + kpf.names.length) % FOCUS_CYCLE.length],
+  }));
 }

@@ -5,6 +5,7 @@ import {
   daysSince,
   overallStatus,
   sortByUrgency,
+  sortStudents,
   subjectStatus,
 } from "../src/js/domain/ranking.js";
 import { activeTests } from "../src/js/domain/tests.js";
@@ -68,4 +69,23 @@ test("Gesamtstatus: nur ausgewählte Tests zählen, schlechtester gewinnt", () =
   assert.equal(overallStatus(kid, undefined, last, NOW), "orange"); // beide Tests aktiv
   assert.equal(overallStatus(kid, { tests: ["german"] }, last, NOW), "green");
   assert.equal(overallStatus(kid, { tests: ["math"] }, last, NOW), "orange");
+});
+
+test("Sortierung nach Name und nach letztem Test eines Fachs", () => {
+  const kids = [
+    { id: "a", name: "Zoe", focus: null },
+    { id: "b", name: "Älter", focus: null },
+    { id: "c", name: "Mia", focus: "german" }, // Mathe nicht ausgewählt
+    { id: "d", name: "Noah", focus: null },
+  ];
+  const last = {
+    a: { math: ago(10) },
+    b: { math: ago(40) },
+    c: { math: ago(99) },
+    d: { math: null }, // noch nie
+  };
+  const names = (key) => sortStudents(key, kids, {}, last, NOW).map((k) => k.name);
+  assert.deepEqual(names("name"), ["Älter", "Mia", "Noah", "Zoe"]);
+  // Noah (nie) vor Älter (40) vor Zoe (10); Mia hat Mathe nicht ausgewählt: ganz unten
+  assert.deepEqual(names("last:math"), ["Noah", "Älter", "Zoe", "Mia"]);
 });

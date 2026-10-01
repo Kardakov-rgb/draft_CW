@@ -40,14 +40,33 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
   `src/js/config.js` (Platzhalter `{studentId}`), die Demo verweist auf Platzhalterseiten
   (`teacher-dashboard.html`, `results.html`). Offen für den Dienstleister: echte Adressen, welche ID
   übergeben wird, und dass die Zielseiten die Berechtigung der Testleitung prüfen.
+- **KPF-Auswahl:** Oben wählt die Testleitung die **KPF** (eine KPF fasst eine Klasse zusammen). Die
+  Kinder werden je KPF geladen. Schnittstellen: `getKpfs()` und `getStudents(kpfId)` in
+  `src/js/data/students.js`. Die zuletzt gewählte KPF merkt sich der Browser.
+- **Suche und Ampel-Filter:** Suche nach Name (ignoriert Groß-/Kleinschreibung und Akzente) und Filter
+  Alle / Rot / Orange / Grün. Die Filterknöpfe zeigen zugleich die Anzahl je Farbe (Zusammenfassung).
+  Die Farbe einer Zeile ist die schlechteste Farbe der ausgewählten Tests.
+- **Sortierung umschaltbar:** Dringlichkeit (Standard), Name (A–Z), Letzter Test Mathe oder Deutsch
+  (längster Abstand zuerst). Die Reihenfolge wird bei KPF- oder Sortierwechsel neu berechnet, nicht bei
+  jeder Änderung, damit Zeilen nicht springen.
+- **Bestätigung vor dem Direktstart:** Ein Fenster fragt nach ("Test für <Name> jetzt auf diesem Gerät
+  starten?"). Der Fokus liegt auf "Abbrechen", Esc bricht ab.
+- **Sammelauswahl:** "Tests für alle setzen (N)" setzt die Tests für alle Kinder der **aktuellen
+  Ansicht** (nach Filter und Suche, ohne Archiv). Das Fenster nennt die Anzahl der betroffenen Kinder.
+- **QR-Sammelblatt je Fach:** Ein druckbares Blatt mit Karten (Name, QR-Code, Gültigkeit) für alle Kinder
+  der aktuellen Ansicht, die den Test ausgewählt haben. Dafür werden **länger gültige** Links angefordert
+  (`purpose: "sheet"`, Demo-Annahme 8 Stunden, `LINK_VALIDITY_MINUTES` in `src/js/config.js`).
+  **Sicherheitshinweis für den Dienstleister:** Ein gedruckter Code ist ein Zugangsschlüssel auf Papier.
+  Empfohlen: nur für das jeweilige Fach und Kind gültig, einmal nutzbar, kurze Laufzeit (Schultag),
+  Protokollierung der Ausstellung. Die Seite warnt die Testleitung vor Weitergabe und Fotos.
 - Später kommen weitere Spalten dazu: Die Tabelle ist daher konfigurationsgetrieben (`src/js/config.js`).
 
 ## Was in der Demo simuliert ist und vom Dienstleister ersetzt wird
 
 | Demo                                      | Produktiv                                                              |
 | ----------------------------------------- | ---------------------------------------------------------------------- |
-| `src/js/data/students.js` (erfundene Namen) | Gruppenliste aus der Lernplattform, nur für berechtigte Testleitungen |
-| `src/js/services/testLinkService.js` (Zufalls-Token im Browser) | Schnittstelle der Lernplattform: pro Aufruf neuer, kurzlebiger, einmal nutzbarer Token; Link auf die bestehende Startseite |
+| `getKpfs()`, `getStudents(kpfId)` in `src/js/data/students.js` (erfundene Namen) | KPFs und Kinder aus der Datenbank, nur für berechtigte Testleitungen |
+| `src/js/services/testLinkService.js` (Zufalls-Token im Browser) | Schnittstelle der Lernplattform: pro Aufruf neuer, einmal nutzbarer Token (`purpose` "single" kurz, "sheet" länger); Link auf die bestehende Startseite |
 | `src/js/services/studentStateService.js` (localStorage, nur im Browser) | Speichern von Testauswahl und Archiv-Status in der Plattform/Datenbank |
 | `src/js/data/lastTests.js` (Demo-Daten, relativ zu heute) | `getLastTestDates()`: Datum des letzten Tests je Kind und Fach (`JJJJ-MM-TT` oder `null`) aus der Datenbank |
 | `focus` in `src/js/data/students.js` (erfundene Werte) | Förderschwerpunkt aus der Datenbank                                   |
@@ -57,7 +76,7 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
 | Keine Anmeldung der Testleitung           | Anmeldung und Rechtekonzept (nur eigene Gruppen sehen)                 |
 
 Die Oberfläche bleibt unverändert, solange Signatur und Rückgabeformat der beiden Funktionen
-`getStudents()`, `getLastTestDates()`, `createTestLink()`, `getStates()` und `saveState()` erhalten bleiben.
+`getKpfs()`, `getStudents(kpfId)`, `getLastTestDates()`, `createTestLink()`, `getStates()` und `saveState()` erhalten bleiben.
 
 Bekannte Einschränkungen der Demo: Die Tabelle scrollt auf Smartphones seitlich (Zielgerät der
 Testleitung: Laptop/Tablet). Datenschutz, Token-Sicherheit und Rechtekonzept sind bewusst Aufgabe des

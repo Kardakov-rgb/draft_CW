@@ -1,0 +1,95 @@
+/* QR-Sammelblatt: Bildschirmansicht und Druck. Gedruckt wird nur das Sammelblatt-Fenster. */
+.sheet-dialog {
+  width: min(96vw, 64rem);
+  max-height: 94vh;
+  padding: var(--space-4);
+  border: 0;
+  border-radius: 0.75rem;
+  color: var(--color-text);
+}
+
+.sheet-dialog::backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+
+.sheet__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.sheet__title {
+  margin: 0 0 var(--space-1);
+  font-size: 1.25rem;
+  color: var(--color-primary);
+}
+
+.sheet__info,
+.sheet__warning {
+  margin: var(--space-1) 0 0;
+  font-size: 0.9rem;
+}
+
+.sheet__actions {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.sheet__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--space-3);
+}
+
+.sheet-card {
+  padding: var(--space-2);
+  border: 1px dashed #888; /* Schnittlinie */
+  border-radius: 0.5rem;
+  text-align: center;
+  break-inside: avoid;
+}
+
+.sheet-card__name {
+  margin: 0 0 var(--space-2);
+  font-size: 1rem;
+}
+
+.sheet-card__qr {
+  display: block;
+  width: 100%;
+  max-width: 9rem;
+  margin-inline: auto;
+}
+
+.sheet-card__meta {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+@media print {
+  body > :not(.sheet-dialog) {
+    display: none !important;
+  }
+
+  .sheet-dialog {
+    position: static;
+    width: auto;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .sheet__actions {
+    display: none;
+  }
+
+  .sheet__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

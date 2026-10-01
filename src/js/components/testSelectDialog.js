@@ -1,6 +1,6 @@
-/* Dialog zur Auswahl der Tests eines Kindes. Speichern nur mit mindestens einem Test
-   (Kinder, die nicht getestet werden, werden stattdessen archiviert). */
-import { FOCUS, SUBJECTS } from "../config.js";
+/* Dialog zur Auswahl der Tests für ein Kind oder (Sammelauswahl) für mehrere Kinder.
+   Speichern nur mit mindestens einem Test (Kinder, die nicht getestet werden, werden archiviert). */
+import { SUBJECTS } from "../config.js";
 
 export function createTestSelectDialog() {
   const dialog = document.createElement("dialog");
@@ -59,13 +59,13 @@ export function createTestSelectDialog() {
   });
 
   return {
-    /** @param {string[]} currentTests aktuell aktive Tests; @param save async (tests) => void */
-    open(student, currentTests, save) {
+    /**
+     * @param {{title: string, hint: string, currentTests: string[], save: (tests: string[]) => Promise<void>}} options
+     */
+    open({ title: heading, hint, currentTests, save }) {
       onSave = save;
-      title.textContent = student.name;
-      focusLine.textContent = FOCUS[student.focus]
-        ? `Förderschwerpunkt laut Datenbank: ${FOCUS[student.focus].label}`
-        : "Kein Förderschwerpunkt hinterlegt.";
+      title.textContent = heading;
+      focusLine.textContent = hint;
       form.querySelectorAll("input").forEach((i) => (i.checked = currentTests.includes(i.value)));
       validate();
       dialog.showModal();
