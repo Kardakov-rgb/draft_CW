@@ -37,10 +37,21 @@
 
     <main class="container" id="main">
       <h1>Testübersicht</h1>
-      <p class="lead"><span data-group-name></span>: QR-Code anzeigen oder Test direkt starten.</p>
+      <p class="lead">
+        <span data-group-name></span>: Tests auswählen, dann QR-Code anzeigen oder Test direkt
+        starten.
+      </p>
       <div class="table-wrap" data-student-table>
         <noscript>Diese Seite benötigt JavaScript.</noscript>
       </div>
+
+      <section class="archive" aria-labelledby="archive-title">
+        <h2 id="archive-title">Archiv (<span data-archive-count>0</span>)</h2>
+        <p>
+          Archivierte Kinder erscheinen nicht in der Testliste und können nicht getestet werden.
+        </p>
+        <div class="table-wrap" data-archive-table></div>
+      </section>
     </main>
 
     <footer class="site-footer">

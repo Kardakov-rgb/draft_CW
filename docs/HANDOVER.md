@@ -11,6 +11,17 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
   Kamera und landet direkt im Test) oder **Test direkt starten** (Testleitung startet am Gerät).
 - Jeder Test hat einen individuellen Link. Bei **jedem** Öffnen eines QR-Codes (und bei "Neu erzeugen")
   wird ein neuer Link angefordert. Die Startseite, auf der das Kind landet, existiert bereits.
+- **Testauswahl pro Kind:** Nicht jedes Kind macht beide Tests. Button "Tests auswählen" öffnet ein
+  Fenster (mindestens ein Test muss gewählt sein). Nicht ausgewählte Tests sind ausgegraut und weder
+  per QR-Code noch per Direktstart bedienbar. Die Auswahl ist jederzeit änderbar. Die Testleitung
+  erkennt den Stand an den aktiven Buttons.
+- **Voreinstellung aus der Datenbank:** Solange nichts gespeichert wurde, bestimmt der
+  **Förderschwerpunkt** (aus einer Datenbank, Schnittstelle nötig) die aktiven Tests. Ohne Eintrag
+  sind beide Tests aktiv. Zuordnung in `FOCUS` in `src/js/config.js`.
+  **Annahme:** Werte `math`, `german`, `both`. Echte Werte der Datenbank mit dem Dienstleister klären.
+- **Archiv:** Kinder, die nicht getestet werden sollen (z. B. abwesend), werden per Button in eine Liste
+  weiter unten archiviert und können von dort wiederhergestellt werden. Archivierte Kinder haben
+  keine Test-Buttons.
 - Später kommen weitere Spalten dazu: Die Tabelle ist daher konfigurationsgetrieben (`src/js/config.js`).
 
 ## Was in der Demo simuliert ist und vom Dienstleister ersetzt wird
@@ -19,12 +30,14 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
 | ----------------------------------------- | ---------------------------------------------------------------------- |
 | `src/js/data/students.js` (erfundene Namen) | Gruppenliste aus der Lernplattform, nur für berechtigte Testleitungen |
 | `src/js/services/testLinkService.js` (Zufalls-Token im Browser) | Schnittstelle der Lernplattform: pro Aufruf neuer, kurzlebiger, einmal nutzbarer Token; Link auf die bestehende Startseite |
+| `src/js/services/studentStateService.js` (localStorage, nur im Browser) | Speichern von Testauswahl und Archiv-Status in der Plattform/Datenbank |
+| `focus` in `src/js/data/students.js` (erfundene Werte) | Förderschwerpunkt aus der Datenbank                                   |
 | `src/test-start.html` (Platzhalter-Zielseite) | Entfällt, Link zeigt auf die bestehende Startseite                  |
 | Anzeige der URL im QR-Dialog              | Entfernen (nur Demo-Hilfe)                                             |
 | Keine Anmeldung der Testleitung           | Anmeldung und Rechtekonzept (nur eigene Gruppen sehen)                 |
 
 Die Oberfläche bleibt unverändert, solange Signatur und Rückgabeformat der beiden Funktionen
-`getStudents()` und `createTestLink()` erhalten bleiben.
+`getStudents()`, `createTestLink()`, `getStates()` und `saveState()` erhalten bleiben.
 
 Bekannte Einschränkungen der Demo: Die Tabelle scrollt auf Smartphones seitlich (Zielgerät der
 Testleitung: Laptop/Tablet). Datenschutz, Token-Sicherheit und Rechtekonzept sind bewusst Aufgabe des

@@ -27,7 +27,8 @@ src/
   css/                fonts -> tokens -> base -> layout -> components
   js/main.js          Einstiegspunkt (ES-Module)
   js/config.js        Fächer und Spalten der Tabelle
-  js/components/      ein Modul pro UI-Komponente (Tabelle, QR-Dialog)
+  js/components/      ein Modul pro UI-Komponente (Tabelle, QR-Dialog, Testauswahl)
+  js/domain/          Fachlogik (welche Tests sind für ein Kind aktiv?)
   js/services/        Zugriff auf die Lernplattform (in der Demo simuliert)
   js/data/            Beispieldaten (in der Demo erfunden)
   js/vendor/          Fremdbibliothek uqr (QR-Code, MIT-Lizenz), unverändert
