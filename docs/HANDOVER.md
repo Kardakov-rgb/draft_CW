@@ -15,10 +15,10 @@ Dieses Dokument wird mit dem Projekt weiterentwickelt. Offene Punkte sind mit `T
 
 | Rolle in `tokens.css`        | Wert      | Textfarbe auf Weiß? (Kontrast) |
 | ---------------------------- | --------- | ------------------------------ |
-| `--color-green-dark`         | `#006359` | ja (ca. 7,3:1)                 |
+| `--color-green-dark`         | `#006359` | ja (ca. 7,2:1)                 |
 | `--color-gray`               | `#4d4d4d` | ja (ca. 8,5:1)                 |
 | `--color-green-light`        | `#afca00` | nein, nur Flächen/Akzente (ca. 1,9:1) |
-| `--color-orange`             | `#e28807` | nein, nur Flächen/Akzente (ca. 2,5:1) |
+| `--color-orange`             | `#e28807` | nein, nur Flächen/Akzente (ca. 2,7:1) |
 | `--color-yellow`             | `#f4d627` | nein, nur Flächen/Akzente (ca. 1,5:1) |
 
 Schriften: **Montserrat** (Überschriften, UI) und **Noto Serif** (Fließtext), beide unter SIL OFL 1.1,
