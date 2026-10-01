@@ -2,9 +2,10 @@
    Neuer Spaltentyp = neuer Eintrag in CELL_RENDERERS
    (Funktion: Kind, Spalte, Kontext -> DOM-Knoten).
    Kontext: { state, lastTests, now, qrDialog, selectDialog, actions: { saveTests, archive, restore } }
-   Spalten mit `subject` bekommen die Ampelfarbe des Fachs (data-status), sofern der Test aktiv ist. */
+   Spalten mit `subject` bekommen die Ampelfarbe des Fachs (data-status). Ist der Test für das Kind
+   nicht ausgewählt, übernehmen sie die Farbe der ausgewählten Tests (einheitliche Zeile). */
 import { SUBJECTS } from "../config.js";
-import { subjectStatus } from "../domain/ranking.js";
+import { overallStatus, subjectStatus } from "../domain/ranking.js";
 import { activeTests, isTestActive } from "../domain/tests.js";
 import { createTestLink } from "../services/testLinkService.js";
 import { createIcon } from "./icons.js";
@@ -125,9 +126,11 @@ export function renderStudentTable(container, columns, students, ctx) {
     columns.forEach((column, index) => {
       const cell = row.insertCell();
       cell.append(CELL_RENDERERS[column.type](student, column, ctx));
-      if (column.subject && isTestActive(student, ctx.state[student.id], column.subject)) {
-        const iso = ctx.lastTests[student.id]?.[column.subject];
-        cell.dataset.status = subjectStatus(iso, ctx.now).status;
+      if (column.subject) {
+        const childState = ctx.state[student.id];
+        cell.dataset.status = isTestActive(student, childState, column.subject)
+          ? subjectStatus(ctx.lastTests[student.id]?.[column.subject], ctx.now).status
+          : overallStatus(student, childState, ctx.lastTests, ctx.now);
       }
       if (column.group && column.group !== columns[index - 1]?.group) {
         cell.dataset.groupStart = "";

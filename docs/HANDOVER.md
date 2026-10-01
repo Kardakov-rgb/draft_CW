@@ -26,7 +26,7 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
   Schnittstelle nötig) bewertet. Weniger als 28 Tage her: grün, ab 28 Tagen: orange, ab 42 Tagen oder noch
   nie getestet: rot (Kalendertage). Die Farbe liegt dezent als Hintergrund hinter den drei Zellen des Fachs
   (Letzter Test, QR-Code, Test). Die Bedienelemente sind Symbole (QR-Code, Play, Liste mit Häkchen,
-  Archivbox), jeweils mit Tooltip und vollständigem Namen für Screenreader (z. B. "Test Mathe für Max Beispiel starten"). Fächer, die für das Kind nicht ausgewählt sind, bleiben ohne Farbe.
+  Archivbox), jeweils mit Tooltip und vollständigem Namen für Screenreader (z. B. "Test Mathe für Max Beispiel starten"). Bei Kindern, die nur einen Test machen, zieht sich die Farbe dieses Tests auch über die ausgegrauten Zellen des anderen Fachs (einheitliche Zeile).
   Eine Spalte "Letzter Test" zeigt den Abstand in Tagen ("12 Tage"), damit die Information nicht nur an der
   Farbe hängt (Barrierefreiheit, z. B. Rot-Grün-Schwäche). Grenzwerte: `STATUS_THRESHOLDS` in `src/js/config.js`.
 - **Sortierung:** Rot oben, dann orange, dann grün. Für die Zeile zählt die schlechteste Farbe der

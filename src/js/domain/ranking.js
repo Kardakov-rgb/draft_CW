@@ -4,6 +4,7 @@ import { STATUS_THRESHOLDS } from "../config.js";
 import { activeTests } from "./tests.js";
 
 const SEVERITY = { green: 0, orange: 1, red: 2 };
+const STATUS_BY_SEVERITY = ["green", "orange", "red"];
 
 /* Datum "JJJJ-MM-TT" als lokaler Kalendertag (ohne Zeitzonen-Verschiebung). */
 function parseDay(iso) {
@@ -37,6 +38,12 @@ function urgency(student, state, lastTests, now) {
     days = Math.max(days, result.days ?? Infinity);
   }
   return { severity, days };
+}
+
+/** Gesamtstatus eines Kindes: schlechtester Status seiner ausgewählten Tests.
+   Färbt die Zellen eines nicht ausgewählten Tests mit, damit die Zeile einheitlich wirkt. */
+export function overallStatus(student, state, lastTests, now = new Date()) {
+  return STATUS_BY_SEVERITY[urgency(student, state, lastTests, now).severity];
 }
 
 /** Sortiert rot vor orange vor grün, innerhalb einer Farbe den längsten Abstand zuerst. */

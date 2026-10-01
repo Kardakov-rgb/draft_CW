@@ -1,7 +1,12 @@
 /* Tests der Fachlogik (ohne Abhängigkeiten): npm test */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { daysSince, sortByUrgency, subjectStatus } from "../src/js/domain/ranking.js";
+import {
+  daysSince,
+  overallStatus,
+  sortByUrgency,
+  subjectStatus,
+} from "../src/js/domain/ranking.js";
 import { activeTests } from "../src/js/domain/tests.js";
 
 const NOW = new Date(2026, 9, 1, 15, 0); // 1.10.2026, nachmittags
@@ -55,4 +60,12 @@ test("Nicht ausgewählte Tests zählen nicht für die Sortierung", () => {
   const [first] = sortByUrgency([kid], onlyMath, last, NOW);
   assert.equal(first.id, "x");
   assert.deepEqual(activeTests(kid, onlyMath.x), ["math"]);
+});
+
+test("Gesamtstatus: nur ausgewählte Tests zählen, schlechtester gewinnt", () => {
+  const kid = { id: "y", name: "Yara", focus: null };
+  const last = { y: { math: ago(30), german: ago(1) } };
+  assert.equal(overallStatus(kid, undefined, last, NOW), "orange"); // beide Tests aktiv
+  assert.equal(overallStatus(kid, { tests: ["german"] }, last, NOW), "green");
+  assert.equal(overallStatus(kid, { tests: ["math"] }, last, NOW), "orange");
 });
