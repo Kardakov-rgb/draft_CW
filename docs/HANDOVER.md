@@ -1,5 +1,35 @@
 # Übergabe an den IT-Dienstleister
 
+## Zweck der Demo
+
+Nachhilfe an Schulen (Klasse 5 und 6) wird mit Lernverlaufsdiagnostiken (Mathe, Deutsch) belegt. Bisher
+melden sich Kinder mit Nutzername und Passwort an der Lernplattform an, das dauert zu lange.
+Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie sich vorstellen kann:
+
+- Testleitung (bei uns "Schuko" und "Leko") sieht eine Liste der Kinder einer Gruppe (bis zu 25).
+- Pro Kind und Fach (Mathe, Deutsch): entweder **QR-Code anzeigen** (Kind scannt mit Endgerät mit
+  Kamera und landet direkt im Test) oder **Test direkt starten** (Testleitung startet am Gerät).
+- Jeder Test hat einen individuellen Link. Bei **jedem** Öffnen eines QR-Codes (und bei "Neu erzeugen")
+  wird ein neuer Link angefordert. Die Startseite, auf der das Kind landet, existiert bereits.
+- Später kommen weitere Spalten dazu: Die Tabelle ist daher konfigurationsgetrieben (`src/js/config.js`).
+
+## Was in der Demo simuliert ist und vom Dienstleister ersetzt wird
+
+| Demo                                      | Produktiv                                                              |
+| ----------------------------------------- | ---------------------------------------------------------------------- |
+| `src/js/data/students.js` (erfundene Namen) | Gruppenliste aus der Lernplattform, nur für berechtigte Testleitungen |
+| `src/js/services/testLinkService.js` (Zufalls-Token im Browser) | Schnittstelle der Lernplattform: pro Aufruf neuer, kurzlebiger, einmal nutzbarer Token; Link auf die bestehende Startseite |
+| `src/test-start.html` (Platzhalter-Zielseite) | Entfällt, Link zeigt auf die bestehende Startseite                  |
+| Anzeige der URL im QR-Dialog              | Entfernen (nur Demo-Hilfe)                                             |
+| Keine Anmeldung der Testleitung           | Anmeldung und Rechtekonzept (nur eigene Gruppen sehen)                 |
+
+Die Oberfläche bleibt unverändert, solange Signatur und Rückgabeformat der beiden Funktionen
+`getStudents()` und `createTestLink()` erhalten bleiben.
+
+Bekannte Einschränkungen der Demo: Die Tabelle scrollt auf Smartphones seitlich (Zielgerät der
+Testleitung: Laptop/Tablet). Datenschutz, Token-Sicherheit und Rechtekonzept sind bewusst Aufgabe des
+Dienstleisters.
+
 Dieses Dokument wird mit dem Projekt weiterentwickelt. Offene Punkte sind mit `TODO` markiert.
 
 ## Zu klären (vom Auftraggeber)

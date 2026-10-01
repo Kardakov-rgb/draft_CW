@@ -4,7 +4,7 @@
   "private": true,
   "description": "Statische Seite (HTML, CSS, JavaScript) als Vorlage zur Übernahme ins bestehende System",
   "scripts": {
-    "start": "npx --yes serve src -l 3000",
+    "start": "npx --yes http-server src -p 3000 -c-1",
     "format": "npx --yes prettier --write \"src/**/*.{html,css,js}\"",
     "format:check": "npx --yes prettier --check \"src/**/*.{html,css,js}\""
   }

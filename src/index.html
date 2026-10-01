@@ -1,14 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Projekttitel</title>
-    <meta name="description" content="Kurzbeschreibung der Seite" />
+    <title>Testübersicht</title>
+    <meta name="description" content="Demo: Lernverlaufsdiagnostik per QR-Code oder Direktstart" />
 
     <!-- Stylesheets: Reihenfolge ist relevant (Fonts -> Tokens -> Base -> Layout -> Components) -->
-    <link rel="preload" href="assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="assets/fonts/noto-serif-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link
+      rel="preload"
+      href="assets/fonts/montserrat-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/noto-serif-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/tokens.css" />
     <link rel="stylesheet" href="css/base.css" />
@@ -18,18 +30,22 @@
   <body>
     <header class="site-header">
       <div class="container">
-        <p class="site-header__title">Projekttitel</p>
+        <p class="site-header__title">Lernverlaufsdiagnostik</p>
+        <p class="site-header__badge">Demo-Version</p>
       </div>
     </header>
 
     <main class="container" id="main">
-      <h1>Platzhalter</h1>
-      <p>Hier folgen die Inhalte.</p>
+      <h1>Testübersicht</h1>
+      <p class="lead"><span data-group-name></span>: QR-Code anzeigen oder Test direkt starten.</p>
+      <div class="table-wrap" data-student-table>
+        <noscript>Diese Seite benötigt JavaScript.</noscript>
+      </div>
     </main>
 
     <footer class="site-footer">
       <div class="container">
-        <p>&copy; Platzhalter</p>
+        <p>Demo mit erfundenen Beispieldaten. Keine echten Tests, keine echten Zugangsdaten.</p>
       </div>
     </footer>
 

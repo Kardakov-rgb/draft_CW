@@ -10,3 +10,22 @@
 .site-footer {
   padding-block: var(--space-3);
 }
+
+main.container {
+  padding-block: var(--space-4);
+}
+
+.site-header {
+  border-bottom: 0.25rem solid var(--color-accent);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}

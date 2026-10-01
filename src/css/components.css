@@ -1,6 +1,133 @@
 /* Wiederverwendbare Komponenten (BEM-Namensschema: block__element--modifier).
    Pro Komponente ein Abschnitt; bei Wachstum in eigene Dateien auslagern. */
+
+/* --- Header ------------------------------------------------------------ */
 .site-header__title {
   margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.site-header__badge {
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  background: var(--color-yellow);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   font-weight: 600;
+}
+
+.lead {
+  margin-block: 0 var(--space-4);
+}
+
+/* --- Button ------------------------------------------------------------ */
+.button {
+  min-height: 2.75rem; /* Touch-Ziel für Tablets */
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--color-primary);
+  border-radius: 0.5rem;
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.button--secondary {
+  background: #fff;
+  color: var(--color-primary);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+/* --- Tabelle der Kinder ------------------------------------------------ */
+.student-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.student-table th,
+.student-table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.student-table th {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-primary);
+}
+
+.student-table tbody tr:hover {
+  background: rgb(175 202 0 / 0.12);
+}
+
+.student-table td:first-child {
+  font-family: var(--font-sans);
+  font-weight: 600;
+}
+
+/* --- QR-Dialog --------------------------------------------------------- */
+.qr-dialog {
+  width: min(92vw, 28rem);
+  padding: var(--space-4);
+  border: 0;
+  border-radius: 0.75rem;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.qr-dialog::backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+
+.qr-dialog__title {
+  margin-top: 0;
+  font-size: 1.25rem;
+  color: var(--color-primary);
+}
+
+.qr-dialog__qr {
+  display: block;
+  width: min(100%, 20rem);
+  margin-inline: auto;
+  border: 1px solid #ddd;
+}
+
+.qr-dialog__hint {
+  margin: var(--space-3) 0 0;
+  font-weight: 600;
+}
+
+.qr-dialog__url {
+  margin: var(--space-2) 0 0;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  word-break: break-all;
+}
+
+.qr-dialog__actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
 }
