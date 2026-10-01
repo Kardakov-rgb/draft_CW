@@ -2,13 +2,27 @@
    Werte hier anpassen, nicht in den anderen Dateien. */
 :root {
   /* Farben */
+  /* Markenfarben */
+  --color-green-light: #afca00;
+  --color-green-dark: #006359;
+  --color-gray: #4d4d4d;
+  --color-orange: #e28807;
+  --color-yellow: #f4d627;
+
+  /* Semantische Zuordnung (hier umbelegen, nicht die Markenfarben ändern).
+     Hinweis Kontrast auf Weiß: gray und green-dark sind für Text geeignet;
+     green-light, orange und yellow nur für Flächen/Akzente, nicht als Textfarbe. */
   --color-bg: #ffffff;
-  --color-text: #1a1a1a;
-  --color-primary: #0b5fff;
-  --color-muted: #6b7280;
+  --color-text: var(--color-gray);
+  --color-primary: var(--color-green-dark);
+  --color-accent: var(--color-green-light);
+  --color-highlight: var(--color-orange);
+  --color-muted: var(--color-gray);
 
   /* Typografie */
-  --font-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Noto Serif", Georgia, "Times New Roman", serif;
+  --font-base: var(--font-serif); /* Fließtext; Überschriften siehe base.css */
   --font-size-base: 1rem;
   --line-height-base: 1.5;
 

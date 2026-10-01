@@ -19,7 +19,7 @@ Alternativ `src/index.html` über einen beliebigen statischen Webserver ausliefe
 ```
 src/
   index.html          Einstiegsseite
-  css/                tokens -> base -> layout -> components
+  css/                fonts -> tokens -> base -> layout -> components
   js/main.js          Einstiegspunkt (ES-Module)
   js/components/      ein Modul pro UI-Komponente
   assets/             Bilder, Schriften
