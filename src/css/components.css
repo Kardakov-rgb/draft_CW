@@ -1,0 +1,6 @@
+/* Wiederverwendbare Komponenten (BEM-Namensschema: block__element--modifier).
+   Pro Komponente ein Abschnitt; bei Wachstum in eigene Dateien auslagern. */
+.site-header__title {
+  margin: 0;
+  font-weight: 600;
+}
