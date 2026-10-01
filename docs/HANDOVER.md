@@ -22,6 +22,17 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
 - **Archiv:** Kinder, die nicht getestet werden sollen (z. B. abwesend), werden per Button in eine Liste
   weiter unten archiviert und können von dort wiederhergestellt werden. Archivierte Kinder haben
   keine Test-Buttons.
+- **Ampel pro Fach:** Je Kind und Fach wird das Datum des letzten Tests (aus der Datenbank,
+  Schnittstelle nötig) bewertet. Weniger als 28 Tage her: grün, ab 28 Tagen: orange, ab 42 Tagen oder noch
+  nie getestet: rot (Kalendertage). Die Farbe liegt dezent als Hintergrund hinter den drei Zellen des Fachs
+  (Letzter Test, QR-Code, Test). Fächer, die für das Kind nicht ausgewählt sind, bleiben ohne Farbe.
+  Eine Spalte "Letzter Test" zeigt Datum und "vor N Tagen", damit die Information nicht nur an der
+  Farbe hängt (Barrierefreiheit, z. B. Rot-Grün-Schwäche). Grenzwerte: `STATUS_THRESHOLDS` in `src/js/config.js`.
+- **Sortierung:** Rot oben, dann orange, dann grün. Für die Zeile zählt die schlechteste Farbe der
+  ausgewählten Fächer, innerhalb einer Farbe steht der am längsten zurückliegende Test zuerst
+  (noch nie getestet ganz oben, bei Gleichstand alphabetisch). Sortiert wird **nur beim Laden der Seite**,
+  damit Zeilen nicht unter den Händen der Testleitung springen. Farben aktualisieren sich sofort.
+  Das Archiv ist weder gefärbt noch nach Farbe sortiert.
 - Später kommen weitere Spalten dazu: Die Tabelle ist daher konfigurationsgetrieben (`src/js/config.js`).
 
 ## Was in der Demo simuliert ist und vom Dienstleister ersetzt wird
@@ -31,13 +42,14 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
 | `src/js/data/students.js` (erfundene Namen) | Gruppenliste aus der Lernplattform, nur für berechtigte Testleitungen |
 | `src/js/services/testLinkService.js` (Zufalls-Token im Browser) | Schnittstelle der Lernplattform: pro Aufruf neuer, kurzlebiger, einmal nutzbarer Token; Link auf die bestehende Startseite |
 | `src/js/services/studentStateService.js` (localStorage, nur im Browser) | Speichern von Testauswahl und Archiv-Status in der Plattform/Datenbank |
+| `src/js/data/lastTests.js` (Demo-Daten, relativ zu heute) | `getLastTestDates()`: Datum des letzten Tests je Kind und Fach (`JJJJ-MM-TT` oder `null`) aus der Datenbank |
 | `focus` in `src/js/data/students.js` (erfundene Werte) | Förderschwerpunkt aus der Datenbank                                   |
 | `src/test-start.html` (Platzhalter-Zielseite) | Entfällt, Link zeigt auf die bestehende Startseite                  |
 | Anzeige der URL im QR-Dialog              | Entfernen (nur Demo-Hilfe)                                             |
 | Keine Anmeldung der Testleitung           | Anmeldung und Rechtekonzept (nur eigene Gruppen sehen)                 |
 
 Die Oberfläche bleibt unverändert, solange Signatur und Rückgabeformat der beiden Funktionen
-`getStudents()`, `createTestLink()`, `getStates()` und `saveState()` erhalten bleiben.
+`getStudents()`, `getLastTestDates()`, `createTestLink()`, `getStates()` und `saveState()` erhalten bleiben.
 
 Bekannte Einschränkungen der Demo: Die Tabelle scrollt auf Smartphones seitlich (Zielgerät der
 Testleitung: Laptop/Tablet). Datenschutz, Token-Sicherheit und Rechtekonzept sind bewusst Aufgabe des
@@ -81,6 +93,12 @@ Startwert gesetzt und noch mit dem Design abzugleichen (TODO).
 - Kein Build-Schritt nötig, keine Laufzeit-Abhängigkeiten.
 - Design-Werte zentral in `src/css/tokens.css` und damit leicht auf das Zielsystem abbildbar.
 - Komponenten sind getrennt (CSS-Abschnitt + JS-Modul) und einzeln portierbar.
+
+## Qualitätssicherung
+
+`npm test` führt Tests der Fachlogik aus (Ampel-Grenzen, Sortierung, Testauswahl), ohne
+Abhängigkeiten, benötigt nur Node.js. Die Fachlogik liegt bewusst in `src/js/domain/` ohne DOM-Zugriff,
+damit sie sich auch in ein anderes System übernehmen lässt.
 
 ## Übergabe-Checkliste
 

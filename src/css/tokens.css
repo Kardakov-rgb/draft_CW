@@ -19,6 +19,11 @@
   --color-highlight: var(--color-orange);
   --color-muted: var(--color-gray);
 
+  /* Ampel (dezente Hintergründe) */
+  --status-red-bg: rgb(214 69 69 / 0.15);
+  --status-orange-bg: rgb(226 136 7 / 0.17);
+  --status-green-bg: rgb(175 202 0 / 0.17);
+
   /* Typografie */
   --font-sans: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-serif: "Noto Serif", Georgia, "Times New Roman", serif;
@@ -33,5 +38,5 @@
   --space-4: 2rem;
 
   /* Layout */
-  --container-max: 72rem;
+  --container-max: 80rem;
 }

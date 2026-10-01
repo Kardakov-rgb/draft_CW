@@ -2,10 +2,12 @@
   "name": "draft-cw",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "Statische Seite (HTML, CSS, JavaScript) als Vorlage zur Übernahme ins bestehende System",
   "scripts": {
     "start": "npx --yes http-server src -p 3000 -c-1",
     "format": "npx --yes prettier --write \"src/**/*.{html,css,js}\"",
-    "format:check": "npx --yes prettier --check \"src/**/*.{html,css,js}\""
+    "format:check": "npx --yes prettier --check \"src/**/*.{html,css,js}\"",
+    "test": "node --test"
   }
 }

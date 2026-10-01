@@ -18,9 +18,17 @@ export const FOCUS = {
   both: { label: "Mathe und Deutsch", tests: ["math", "german"] },
 };
 
+/* Ampel nach Tagen seit dem letzten Test (pro Fach):
+   unter orangeAfterDays grün, ab orangeAfterDays orange, ab redAfterDays rot.
+   Noch nie getestet = rot. */
+export const STATUS_THRESHOLDS = { orangeAfterDays: 28, redAfterDays: 42 };
+
 /* Spalten der Tabelle, in dieser Reihenfolge.
+   group: Fach-Schlüssel aus SUBJECTS. Aufeinanderfolgende Spalten derselben Gruppe bekommen
+          eine gemeinsame Überschrift.
    type:
      "text"    zeigt student[field]
+     "lastTest" Datum des letzten Tests für `subject`
      "select"  Button, öffnet das Fenster zur Testauswahl
      "qr"      Button, öffnet den QR-Code für `subject` (grau, wenn Test nicht ausgewählt)
      "start"   Button, startet den Test für `subject` (grau, wenn Test nicht ausgewählt)
@@ -29,10 +37,18 @@ export const FOCUS = {
 export const COLUMNS = [
   { id: "name", label: "Name", type: "text", field: "name" },
   { id: "select", label: "Tests", type: "select" },
-  { id: "qr-math", label: "QR-Code Mathe", type: "qr", subject: "math" },
-  { id: "qr-german", label: "QR-Code Deutsch", type: "qr", subject: "german" },
-  { id: "start-math", label: "Test Mathe", type: "start", subject: "math" },
-  { id: "start-german", label: "Test Deutsch", type: "start", subject: "german" },
+  { id: "last-math", label: "Letzter Test", type: "lastTest", group: "math", subject: "math" },
+  { id: "qr-math", label: "QR-Code", type: "qr", group: "math", subject: "math" },
+  { id: "start-math", label: "Test", type: "start", group: "math", subject: "math" },
+  {
+    id: "last-german",
+    label: "Letzter Test",
+    type: "lastTest",
+    group: "german",
+    subject: "german",
+  },
+  { id: "qr-german", label: "QR-Code", type: "qr", group: "german", subject: "german" },
+  { id: "start-german", label: "Test", type: "start", group: "german", subject: "german" },
   { id: "archive", label: "Archiv", type: "archive" },
 ];
 

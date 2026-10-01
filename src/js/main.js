@@ -2,6 +2,8 @@
    sobald sich ein Stand ändert. Fachlogik liegt in domain/, Datenzugriff in services/ und data/. */
 import { ARCHIVE_COLUMNS, COLUMNS } from "./config.js";
 import { getStudents, GROUP_NAME } from "./data/students.js";
+import { getLastTestDates } from "./data/lastTests.js";
+import { sortByUrgency } from "./domain/ranking.js";
 import { getStates, saveState } from "./services/studentStateService.js";
 import { createQrDialog } from "./components/qrDialog.js";
 import { createTestSelectDialog } from "./components/testSelectDialog.js";
@@ -9,8 +11,13 @@ import { renderStudentTable } from "./components/studentTable.js";
 
 async function init() {
   document.querySelector("[data-group-name]").textContent = GROUP_NAME;
-  const students = await getStudents();
+  const now = new Date();
+  const loaded = await getStudents();
   const state = await getStates();
+  const lastTests = await getLastTestDates(loaded, now);
+  /* Reihenfolge wird nur beim Laden berechnet (rot oben). Änderungen im laufenden Betrieb
+     verschieben keine Zeilen, die Farben aktualisieren sich aber sofort. */
+  const students = sortByUrgency(loaded, state, lastTests, now);
 
   const listEl = document.querySelector("[data-student-table]");
   const archiveEl = document.querySelector("[data-archive-table]");
@@ -23,6 +30,8 @@ async function init() {
 
   const ctx = {
     state,
+    lastTests,
+    now,
     qrDialog: createQrDialog(),
     selectDialog: createTestSelectDialog(),
     actions: {
