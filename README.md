@@ -15,6 +15,13 @@ npm test         # Tests der Fachlogik
 Alternativ `src/index.html` über einen beliebigen statischen Webserver ausliefern
 (ES-Module funktionieren nicht über `file://`).
 
+## Veröffentlichung (Demo online)
+
+Änderungen an `main` veröffentlicht `.github/workflows/pages.yml` automatisch über GitHub Pages
+(Ordner `src/`). Einmalig im Repo: Settings -> Pages -> Source: "GitHub Actions". Adresse:
+`https://<benutzer>.github.io/draft_CW/`. Die Seite ist öffentlich erreichbar: nur erfundene Demo-Daten
+verwenden, keine echten Namen oder Zugangsdaten.
+
 ## Was ist das?
 
 Demo einer Testübersicht: Liste von Kindern, pro Kind und Fach ein QR-Code oder ein Direktstart
