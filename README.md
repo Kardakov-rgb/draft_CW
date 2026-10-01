@@ -28,7 +28,7 @@ src/
   css/                fonts -> tokens -> base -> layout -> components
   js/main.js          Einstiegspunkt (ES-Module)
   js/config.js        Fächer und Spalten der Tabelle
-  js/components/      ein Modul pro UI-Komponente (Tabelle, QR-Dialog, Testauswahl)
+  js/components/      ein Modul pro UI-Komponente (Tabelle, QR-Dialog, Testauswahl, Symbole in icons.js)
   js/domain/          Fachlogik ohne DOM: aktive Tests, Ampel und Sortierung
 tests/              Tests der Fachlogik (npm test)
   js/services/        Zugriff auf die Lernplattform (in der Demo simuliert)

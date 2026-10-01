@@ -52,6 +52,20 @@
   outline-offset: 2px;
 }
 
+/* Symbol-Button: quadratisch, Symbol folgt der Textfarbe */
+.button--icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  padding: var(--space-2);
+}
+
+.icon {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
 /* --- Tabelle der Kinder ------------------------------------------------ */
 .student-table {
   width: 100%;
@@ -101,17 +115,9 @@
 }
 
 .last-test {
-  display: flex;
-  flex-direction: column;
   font-family: var(--font-sans);
   font-size: 0.875rem;
   font-weight: 600;
-}
-
-.last-test__relative {
-  font-weight: 400;
-  font-size: 0.8125rem;
-  color: var(--color-muted);
 }
 
 /* --- QR-Dialog --------------------------------------------------------- */

@@ -7,21 +7,25 @@ import { SUBJECTS } from "../config.js";
 import { subjectStatus } from "../domain/ranking.js";
 import { activeTests, isTestActive } from "../domain/tests.js";
 import { createTestLink } from "../services/testLinkService.js";
+import { createIcon } from "./icons.js";
 
 const INACTIVE_HINT = "Für dieses Kind nicht vorgesehen";
 
-function button(label, className, onClick) {
+/* Symbol-Button. `label` ist der Name für Screenreader (mit Kontext), `hint` der kurze Tooltip. */
+function iconButton({ icon, label, hint, className, onClick }) {
   const el = document.createElement("button");
   el.type = "button";
-  el.className = className;
-  el.textContent = label;
+  el.className = `button button--icon ${className}`;
+  el.setAttribute("aria-label", label);
+  el.title = hint;
+  el.append(createIcon(icon));
   el.addEventListener("click", onClick);
   return el;
 }
 
 /* Test-Button, der für nicht ausgewählte Tests grau und nicht klickbar ist. */
-function testButton(student, column, ctx, label, className, onClick) {
-  const el = button(label, className, onClick);
+function testButton(student, column, ctx, options) {
+  const el = iconButton(options);
   if (!isTestActive(student, ctx.state[student.id], column.subject)) {
     el.disabled = true;
     el.title = INACTIVE_HINT;
@@ -29,6 +33,7 @@ function testButton(student, column, ctx, label, className, onClick) {
   return el;
 }
 
+/* Abstand zum letzten Test in Tagen ("12 Tage"), ohne Datum. */
 function lastTestText(student, column, ctx) {
   const wrapper = document.createElement("span");
   wrapper.className = "last-test";
@@ -36,23 +41,9 @@ function lastTestText(student, column, ctx) {
     wrapper.textContent = "–";
     return wrapper;
   }
-  const iso = ctx.lastTests[student.id]?.[column.subject];
-  const { days } = subjectStatus(iso, ctx.now);
-  const date = document.createElement("span");
-  const relative = document.createElement("span");
-  relative.className = "last-test__relative";
-  if (days === null) {
-    date.textContent = "Noch nie";
-  } else {
-    const [year, month, day] = iso.split("-").map(Number);
-    date.textContent = new Date(year, month - 1, day).toLocaleDateString("de-DE", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-    relative.textContent = days === 0 ? "heute" : days === 1 ? "vor 1 Tag" : `vor ${days} Tagen`;
-  }
-  wrapper.append(date, relative);
+  const { days } = subjectStatus(ctx.lastTests[student.id]?.[column.subject], ctx.now);
+  wrapper.textContent =
+    days === null ? "Noch nie" : days === 0 ? "Heute" : days === 1 ? "1 Tag" : `${days} Tage`;
   return wrapper;
 }
 
@@ -62,29 +53,56 @@ const CELL_RENDERERS = {
   lastTest: lastTestText,
 
   select: (student, column, ctx) =>
-    button("Auswählen", "button button--secondary", () =>
-      ctx.selectDialog.open(student, activeTests(student, ctx.state[student.id]), (tests) =>
-        ctx.actions.saveTests(student, tests),
-      ),
-    ),
+    iconButton({
+      icon: "select",
+      label: `Tests für ${student.name} auswählen`,
+      hint: "Tests auswählen",
+      className: "button--secondary",
+      onClick: () =>
+        ctx.selectDialog.open(student, activeTests(student, ctx.state[student.id]), (tests) =>
+          ctx.actions.saveTests(student, tests),
+        ),
+    }),
 
   qr: (student, column, ctx) =>
-    testButton(student, column, ctx, "QR-Code", "button button--secondary", () =>
-      ctx.qrDialog.open(student, column.subject),
-    ),
+    testButton(student, column, ctx, {
+      icon: "qr",
+      label: `QR-Code ${SUBJECTS[column.subject].label} für ${student.name} anzeigen`,
+      hint: "QR-Code anzeigen",
+      className: "button--secondary",
+      onClick: () => ctx.qrDialog.open(student, column.subject),
+    }),
 
   start: (student, column, ctx) =>
-    testButton(student, column, ctx, "Starten", "button", async (event) => {
-      event.currentTarget.disabled = true;
-      const { url } = await createTestLink({ studentId: student.id, subject: column.subject });
-      window.location.assign(url);
+    testButton(student, column, ctx, {
+      icon: "play",
+      label: `Test ${SUBJECTS[column.subject].label} für ${student.name} starten`,
+      hint: "Test starten",
+      className: "",
+      onClick: async (event) => {
+        event.currentTarget.disabled = true;
+        const { url } = await createTestLink({ studentId: student.id, subject: column.subject });
+        window.location.assign(url);
+      },
     }),
 
   archive: (student, column, ctx) =>
-    button("Archivieren", "button button--secondary", () => ctx.actions.archive(student)),
+    iconButton({
+      icon: "archive",
+      label: `${student.name} archivieren`,
+      hint: "Archivieren",
+      className: "button--secondary",
+      onClick: () => ctx.actions.archive(student),
+    }),
 
   restore: (student, column, ctx) =>
-    button("Wiederherstellen", "button button--secondary", () => ctx.actions.restore(student)),
+    iconButton({
+      icon: "restore",
+      label: `${student.name} wiederherstellen`,
+      hint: "Wiederherstellen",
+      className: "button--secondary",
+      onClick: () => ctx.actions.restore(student),
+    }),
 };
 
 export function renderStudentTable(container, columns, students, ctx) {
