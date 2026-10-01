@@ -12,6 +12,8 @@ const ICONS = {
   select: `<path d="M3 6l1.5 1.5L7.5 4.5M3 12l1.5 1.5L7.5 10.5M3 18l1.5 1.5L7.5 16.5M11 6h10M11 12h10M11 18h10"/>`,
   /* Archiv: Ablagebox */
   archive: `<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 12h4"/>`,
+  /* Ergebnisse: Balkendiagramm */
+  results: `<rect x="3" y="12" width="4.5" height="8" rx="1"/><rect x="9.75" y="4" width="4.5" height="16" rx="1"/><rect x="16.5" y="9" width="4.5" height="11" rx="1"/>`,
   /* Wiederherstellen: Pfeil gegen den Uhrzeigersinn */
   restore: `<path d="M3 4v6h6"/><path d="M3.5 14a9 9 0 1 0 2.1-8.9L3 10"/>`,
 };

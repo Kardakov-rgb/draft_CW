@@ -33,6 +33,7 @@ src/
 tests/              Tests der Fachlogik (npm test)
   js/services/        Zugriff auf die Lernplattform (in der Demo simuliert)
   js/data/            Beispieldaten (in der Demo erfunden)
+  js/demo-page.js     nur Demo: Platzhalterseiten für Dashboard und Ergebnisse
   js/vendor/          Fremdbibliothek uqr (QR-Code, MIT-Lizenz), unverändert
   assets/             Bilder, Schriften
 docs/

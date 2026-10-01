@@ -4,9 +4,10 @@
    Kontext: { state, lastTests, now, qrDialog, selectDialog, actions: { saveTests, archive, restore } }
    Spalten mit `subject` bekommen die Ampelfarbe des Fachs (data-status). Ist der Test für das Kind
    nicht ausgewählt, übernehmen sie die Farbe der ausgewählten Tests (einheitliche Zeile). */
-import { SUBJECTS } from "../config.js";
+import { PAGES, SUBJECTS } from "../config.js";
 import { overallStatus, subjectStatus } from "../domain/ranking.js";
 import { activeTests, isTestActive } from "../domain/tests.js";
+import { pageUrl } from "../services/pageLinks.js";
 import { createTestLink } from "../services/testLinkService.js";
 import { createIcon } from "./icons.js";
 
@@ -48,8 +49,31 @@ function lastTestText(student, column, ctx) {
   return wrapper;
 }
 
+/* Link auf eine bestehende Seite, öffnet in neuem Tab (die Liste bleibt stehen). */
+function pageLink(student, column) {
+  const label = PAGES[column.page].label;
+  const link = document.createElement("a");
+  link.href = pageUrl(column.page, student);
+  link.target = "_blank";
+  link.rel = "noopener";
+  if (column.icon) {
+    link.className = "button button--icon button--secondary";
+    link.setAttribute("aria-label", `${label} von ${student.name} öffnen (neuer Tab)`);
+    link.title = `${label} öffnen`;
+    link.append(createIcon(column.icon));
+  } else {
+    link.className = "student-link";
+    link.textContent = student[column.field];
+    link.title = `${label} öffnen`;
+    link.setAttribute("aria-label", `${student.name}: ${label} öffnen (neuer Tab)`);
+  }
+  return link;
+}
+
 const CELL_RENDERERS = {
   text: (student, column) => document.createTextNode(student[column.field] ?? ""),
+
+  pageLink,
 
   lastTest: lastTestText,
 

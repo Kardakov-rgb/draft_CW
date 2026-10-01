@@ -29,13 +29,15 @@ export const STATUS_THRESHOLDS = { orangeAfterDays: 28, redAfterDays: 42 };
    type:
      "text"    zeigt student[field]
      "lastTest" Datum des letzten Tests für `subject`
+     "pageLink" Link auf eine bestehende Seite (`page` aus PAGES), öffnet in neuem Tab.
+               Mit `icon`: Symbol-Button, sonst Text (`field`)
      "select"  Button, öffnet das Fenster zur Testauswahl
      "qr"      Button, öffnet den QR-Code für `subject` (grau, wenn Test nicht ausgewählt)
      "start"   Button, startet den Test für `subject` (grau, wenn Test nicht ausgewählt)
      "archive" Button, verschiebt das Kind ins Archiv
      "restore" Button, holt das Kind aus dem Archiv zurück */
 export const COLUMNS = [
-  { id: "name", label: "Name", type: "text", field: "name" },
+  { id: "name", label: "Name", type: "pageLink", page: "dashboard", field: "name" },
   { id: "select", label: "Tests", type: "select" },
   { id: "last-math", label: "Letzter Test", type: "lastTest", group: "math", subject: "math" },
   { id: "qr-math", label: "QR-Code", type: "qr", group: "math", subject: "math" },
@@ -49,6 +51,7 @@ export const COLUMNS = [
   },
   { id: "qr-german", label: "QR-Code", type: "qr", group: "german", subject: "german" },
   { id: "start-german", label: "Test", type: "start", group: "german", subject: "german" },
+  { id: "results", label: "Ergebnisse", type: "pageLink", page: "results", icon: "results" },
   { id: "archive", label: "Archiv", type: "archive" },
 ];
 
@@ -57,6 +60,15 @@ export const ARCHIVE_COLUMNS = [
   { id: "name", label: "Name", type: "text", field: "name" },
   { id: "restore", label: "", type: "restore" },
 ];
+
+/* Bestehende Seiten des Systems, auf die verlinkt wird. {studentId} wird durch die ID des Kindes
+   ersetzt (URL-kodiert). Hier die echten Adressen eintragen; braucht das System andere Parameter
+   oder signierte Links, dann pageUrl() in services/pageLinks.js anpassen.
+   Die Demo verweist auf Platzhalterseiten. */
+export const PAGES = {
+  dashboard: { label: "Teacher-Dashboard", url: "teacher-dashboard.html?student={studentId}" },
+  results: { label: "Ergebnisse", url: "results.html?student={studentId}" },
+};
 
 /* Gültigkeit eines Test-Links in Minuten (nur Anzeige in der Demo). */
 export const LINK_VALIDITY_MINUTES = 15;

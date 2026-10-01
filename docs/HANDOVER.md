@@ -34,6 +34,12 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
   (noch nie getestet ganz oben, bei Gleichstand alphabetisch). Sortiert wird **nur beim Laden der Seite**,
   damit Zeilen nicht unter den Händen der Testleitung springen. Farben aktualisieren sich sofort.
   Das Archiv ist weder gefärbt noch nach Farbe sortiert.
+- **Verlinkungen:** Der Name des Kindes ist ein Link auf sein **Teacher-Dashboard**, eine eigene Spalte
+  "Ergebnisse" (Balkensymbol) führt zu den **Ergebnissen**. Beide Seiten gibt es bereits im System. Die
+  Links öffnen in einem neuen Tab, damit die Liste stehen bleibt. Die Adressmuster stehen in `PAGES` in
+  `src/js/config.js` (Platzhalter `{studentId}`), die Demo verweist auf Platzhalterseiten
+  (`teacher-dashboard.html`, `results.html`). Offen für den Dienstleister: echte Adressen, welche ID
+  übergeben wird, und dass die Zielseiten die Berechtigung der Testleitung prüfen.
 - Später kommen weitere Spalten dazu: Die Tabelle ist daher konfigurationsgetrieben (`src/js/config.js`).
 
 ## Was in der Demo simuliert ist und vom Dienstleister ersetzt wird
@@ -45,6 +51,7 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
 | `src/js/services/studentStateService.js` (localStorage, nur im Browser) | Speichern von Testauswahl und Archiv-Status in der Plattform/Datenbank |
 | `src/js/data/lastTests.js` (Demo-Daten, relativ zu heute) | `getLastTestDates()`: Datum des letzten Tests je Kind und Fach (`JJJJ-MM-TT` oder `null`) aus der Datenbank |
 | `focus` in `src/js/data/students.js` (erfundene Werte) | Förderschwerpunkt aus der Datenbank                                   |
+| `src/teacher-dashboard.html`, `src/results.html` (Platzhalterseiten) | Entfallen, `PAGES` in `config.js` zeigt auf die bestehenden Seiten |
 | `src/test-start.html` (Platzhalter-Zielseite) | Entfällt, Link zeigt auf die bestehende Startseite                  |
 | Anzeige der URL im QR-Dialog              | Entfernen (nur Demo-Hilfe)                                             |
 | Keine Anmeldung der Testleitung           | Anmeldung und Rechtekonzept (nur eigene Gruppen sehen)                 |

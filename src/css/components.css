@@ -26,6 +26,7 @@
 
 /* --- Button ------------------------------------------------------------ */
 .button {
+  text-decoration: none; /* auch für Links im Button-Look */
   min-height: 2.75rem; /* Touch-Ziel für Tablets */
   padding: var(--space-2) 0.625rem;
   border: 2px solid var(--color-primary);
@@ -89,6 +90,22 @@
 .student-table td:first-child {
   font-family: var(--font-sans);
   font-weight: 600;
+}
+
+.student-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+
+.student-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.student-link:focus-visible {
+  outline: 3px solid var(--color-highlight);
+  outline-offset: 2px;
 }
 
 /* Ampel: dezente Hintergrundfarbe der Zellen eines Fachs */
