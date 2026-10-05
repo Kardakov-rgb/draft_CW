@@ -1,7 +1,7 @@
 /* Fenster "Tests für alle setzen": Die Testleitung wählt selbst, für welche Kinder der KPF die
    Tests gesetzt werden (Kästchen je Kind, Suche, Alle/Keine) und welche Tests das sind.
    Das Fenster speichert nicht selbst, sondern ruft `save(kinder, tests)` auf. */
-import { STATUS_LABELS, SUBJECTS } from "../config.js";
+import { SUBJECTS } from "../config.js";
 import { matchesQuery } from "../domain/view.js";
 
 export function createBulkSelectDialog() {
@@ -39,7 +39,7 @@ export function createBulkSelectDialog() {
   const saveButton = dialog.querySelector("[data-save]");
 
   let students = [];
-  let describe = () => ({ tests: "", status: "green" });
+  let describe = () => ({ tests: "" });
   let selected = new Set();
   let onSave = null;
 
@@ -77,10 +77,7 @@ export function createBulkSelectDialog() {
     const tests = document.createElement("span");
     tests.className = "bulk-row__tests";
     tests.textContent = info.tests;
-    const badge = document.createElement("span");
-    badge.className = `badge badge--${info.status}`;
-    badge.textContent = STATUS_LABELS[info.status];
-    label.append(box, name, tests, badge);
+    label.append(box, name, tests);
     item.append(label);
     return item;
   }
@@ -145,7 +142,7 @@ export function createBulkSelectDialog() {
      * @param {{id: string, name: string}[]} options.students alle auswählbaren Kinder der KPF
      * @param {Set<string>} options.preselectedIds vorausgewählte Kinder
      * @param {string} options.hint Erklärtext
-     * @param {(student: object) => {tests: string, status: "red"|"orange"|"green"}} options.describe
+     * @param {(student: object) => {tests: string}} options.describe
      * @param {(students: object[], tests: string[]) => Promise<void>} options.save
      */
     open({ students: all, preselectedIds, hint: text, describe: describeStudent, save }) {

@@ -3,7 +3,7 @@
 import { ARCHIVE_COLUMNS, COLUMNS, SUBJECTS } from "./config.js";
 import { getKpfs, getStudents } from "./data/students.js";
 import { getLastTestDates } from "./data/lastTests.js";
-import { overallStatus, sortStudents } from "./domain/ranking.js";
+import { sortStudents } from "./domain/ranking.js";
 import { filterStudents, statusCounts } from "./domain/view.js";
 import { activeTests, isTestActive } from "./domain/tests.js";
 import { getStates, saveState } from "./services/studentStateService.js";
@@ -111,7 +111,6 @@ async function init() {
           tests: activeTests(student, state[student.id])
             .map((id) => SUBJECTS[id].label)
             .join(", "),
-          status: overallStatus(student, state[student.id], ctx.lastTests, now),
         }),
         save: async (targets, tests) => {
           for (const student of targets) await patch(student, { tests });

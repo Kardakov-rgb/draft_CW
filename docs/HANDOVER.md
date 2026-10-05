@@ -54,7 +54,7 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
 - **Sammelauswahl:** "Tests für alle setzen" öffnet ein Fenster mit **allen Kindern der KPF** (ohne
   Archiv). Die Testleitung wählt per Kästchen individuell, wer dazugehört (Suche im Fenster, "Alle" für die
   gefundenen Kinder, "Keine"), und legt fest, welche Tests gesetzt werden. Zu jedem Kind stehen die aktuell
-  aktiven Tests und die Ampelfarbe. Ist auf der Seite ein Filter oder eine Suche aktiv, sind die dort
+  aktiven Tests. Ist auf der Seite ein Filter oder eine Suche aktiv, sind die dort
   sichtbaren Kinder vorausgewählt, sonst ist niemand vorausgewählt. Gespeichert wird erst mit
   "Für N Kinder speichern", Abbrechen ändert nichts.
 - **QR-Sammelblatt je Fach:** Ein druckbares Blatt mit Karten (Name, QR-Code, Gültigkeit) für alle Kinder

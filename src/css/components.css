@@ -422,24 +422,3 @@
   font-size: 0.8125rem;
   color: var(--color-muted);
 }
-
-.badge {
-  flex: none;
-  padding: 0.125rem var(--space-2);
-  border-radius: 999px;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.badge--red {
-  background: var(--status-red-bg);
-}
-
-.badge--orange {
-  background: var(--status-orange-bg);
-}
-
-.badge--green {
-  background: var(--status-green-bg);
-}
