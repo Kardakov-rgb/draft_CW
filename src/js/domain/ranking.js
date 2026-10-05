@@ -1,7 +1,7 @@
 /* Fachlogik: Ampel-Status und Sortierung nach dem Datum des letzten Tests.
    Reine Funktionen, keine DOM-Zugriffe. Grenzwerte stehen in config.js (STATUS_THRESHOLDS). */
 import { STATUS_THRESHOLDS } from "../config.js";
-import { activeTests } from "./tests.js";
+import { activeTests, isTestActive } from "./tests.js";
 
 const SEVERITY = { green: 0, orange: 1, red: 2 };
 const STATUS_BY_SEVERITY = ["green", "orange", "red"];
@@ -55,4 +55,24 @@ export function sortByUrgency(students, states, lastTests, now = new Date()) {
     if (ra.days !== rb.days) return rb.days > ra.days ? 1 : -1;
     return a.name.localeCompare(b.name, "de");
   });
+}
+
+const byName = (a, b) => a.name.localeCompare(b.name, "de");
+
+/** Sortierung nach Schlüssel aus SORT_OPTIONS: "urgency", "name" oder "last:<fach>". */
+export function sortStudents(sortKey, students, states, lastTests, now = new Date()) {
+  if (sortKey === "name") return [...students].sort(byName);
+  if (sortKey.startsWith("last:")) {
+    const subject = sortKey.slice("last:".length);
+    // Längster Abstand zuerst, noch nie = ganz oben, nicht ausgewählter Test = ganz unten
+    const days = (student) =>
+      isTestActive(student, states[student.id], subject)
+        ? (subjectStatus(lastTests[student.id]?.[subject], now).days ?? Infinity)
+        : -Infinity;
+    return [...students].sort((a, b) => {
+      const [da, db] = [days(a), days(b)];
+      return da !== db ? (db > da ? 1 : -1) : byName(a, b);
+    });
+  }
+  return sortByUrgency(students, states, lastTests, now);
 }

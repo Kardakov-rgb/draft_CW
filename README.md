@@ -32,11 +32,12 @@ des Tests. Hintergrund und Übergabehinweise: [docs/HANDOVER.md](docs/HANDOVER.m
 ```
 src/
   index.html          Einstiegsseite
-  css/                fonts -> tokens -> base -> layout -> components
+  css/                fonts -> tokens -> base -> layout -> components -> sheet
   js/main.js          Einstiegspunkt (ES-Module)
   js/config.js        Fächer und Spalten der Tabelle
-  js/components/      ein Modul pro UI-Komponente (Tabelle, QR-Dialog, Testauswahl, Symbole in icons.js)
-  js/domain/          Fachlogik ohne DOM: aktive Tests, Ampel und Sortierung
+  js/components/      ein Modul pro UI-Komponente (Tabelle, Werkzeugleiste, QR-Dialog und -Sammelblatt,
+                      Testauswahl, Bestätigung, Symbole in icons.js)
+  js/domain/          Fachlogik ohne DOM: aktive Tests, Ampel, Sortierung, Suche und Filter
 tests/              Tests der Fachlogik (npm test)
   js/services/        Zugriff auf die Lernplattform (in der Demo simuliert)
   js/data/            Beispieldaten (in der Demo erfunden)

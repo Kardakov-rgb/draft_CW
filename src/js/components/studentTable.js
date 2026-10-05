@@ -1,10 +1,10 @@
 /* Tabellen der Kinder (aktive Liste und Archiv). Spalten kommen aus config.js.
    Neuer Spaltentyp = neuer Eintrag in CELL_RENDERERS
    (Funktion: Kind, Spalte, Kontext -> DOM-Knoten).
-   Kontext: { state, lastTests, now, qrDialog, selectDialog, actions: { saveTests, archive, restore } }
+   Kontext: { state, lastTests, now, qrDialog, selectDialog, confirmDialog, actions: { saveTests, archive, restore } }
    Spalten mit `subject` bekommen die Ampelfarbe des Fachs (data-status). Ist der Test für das Kind
    nicht ausgewählt, übernehmen sie die Farbe der ausgewählten Tests (einheitliche Zeile). */
-import { PAGES, SUBJECTS } from "../config.js";
+import { FOCUS, PAGES, SUBJECTS } from "../config.js";
 import { overallStatus, subjectStatus } from "../domain/ranking.js";
 import { activeTests, isTestActive } from "../domain/tests.js";
 import { pageUrl } from "../services/pageLinks.js";
@@ -84,9 +84,14 @@ const CELL_RENDERERS = {
       hint: "Tests auswählen",
       className: "button--secondary",
       onClick: () =>
-        ctx.selectDialog.open(student, activeTests(student, ctx.state[student.id]), (tests) =>
-          ctx.actions.saveTests(student, tests),
-        ),
+        ctx.selectDialog.open({
+          title: student.name,
+          hint: FOCUS[student.focus]
+            ? `Förderschwerpunkt laut Datenbank: ${FOCUS[student.focus].label}`
+            : "Kein Förderschwerpunkt hinterlegt.",
+          currentTests: activeTests(student, ctx.state[student.id]),
+          save: (tests) => ctx.actions.saveTests(student, tests),
+        }),
     }),
 
   qr: (student, column, ctx) =>
@@ -105,7 +110,14 @@ const CELL_RENDERERS = {
       hint: "Test starten",
       className: "",
       onClick: async (event) => {
-        event.currentTarget.disabled = true;
+        const button = event.currentTarget;
+        const confirmed = await ctx.confirmDialog.ask({
+          title: `${SUBJECTS[column.subject].label}-Test starten`,
+          message: `Soll der Test für ${student.name} jetzt auf diesem Gerät gestartet werden?`,
+          confirmLabel: "Test starten",
+        });
+        if (!confirmed) return;
+        button.disabled = true;
         const { url } = await createTestLink({ studentId: student.id, subject: column.subject });
         window.location.assign(url);
       },
@@ -130,11 +142,11 @@ const CELL_RENDERERS = {
     }),
 };
 
-export function renderStudentTable(container, columns, students, ctx) {
+export function renderStudentTable(container, columns, students, ctx, emptyText) {
   if (students.length === 0) {
     const empty = document.createElement("p");
     empty.className = "table-empty";
-    empty.textContent = "Keine Kinder in dieser Liste.";
+    empty.textContent = emptyText ?? "Keine Kinder in dieser Liste.";
     container.replaceChildren(empty);
     return;
   }

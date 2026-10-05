@@ -70,5 +70,20 @@ export const PAGES = {
   results: { label: "Ergebnisse", url: "results.html?student={studentId}" },
 };
 
-/* Gültigkeit eines Test-Links in Minuten (nur Anzeige in der Demo). */
-export const LINK_VALIDITY_MINUTES = 15;
+/* Gültigkeit von Test-Links in Minuten (nur Anzeige in der Demo, durchgesetzt wird sie von der
+   Lernplattform). "single": QR-Code am Bildschirm (kurz). "sheet": ausgedrucktes Sammelblatt
+   (länger, z. B. ein Schultag). ANNAHME 480 Minuten, mit dem Dienstleister und dem Datenschutz klären. */
+export const LINK_VALIDITY_MINUTES = { single: 15, sheet: 480 };
+
+/* Namen der Ampelfarben für Filter und Beschriftung. */
+export const STATUS_LABELS = { red: "Rot", orange: "Orange", green: "Grün" };
+
+/* Sortierungen der Liste. Für jedes Fach kommt automatisch "Letzter Test <Fach>" dazu. */
+export const SORT_OPTIONS = [
+  { id: "urgency", label: "Dringlichkeit (Standard)" },
+  { id: "name", label: "Name (A–Z)" },
+  ...Object.entries(SUBJECTS).map(([id, subject]) => ({
+    id: `last:${id}`,
+    label: `Letzter Test ${subject.label} (längster Abstand zuerst)`,
+  })),
+];

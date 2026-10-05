@@ -248,3 +248,177 @@
   color: var(--color-muted);
   font-style: italic;
 }
+
+/* --- Werkzeugleiste: Auswahl, Suche, Sortierung ------------------------- */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.toolbar--secondary {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toolbar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field--grow {
+  flex: 1 1 12rem;
+}
+
+.field__label {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.field__control {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--color-primary);
+  border-radius: 0.5rem;
+  background: #fff;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+}
+
+.field__control:focus-visible {
+  outline: 3px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+/* Button mit Symbol und Text */
+.button--with-text {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Ampel-Filter */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  min-height: 2.5rem;
+  padding: var(--space-1) var(--space-3);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #f1f1f1;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chip--red {
+  background: var(--status-red-bg);
+}
+
+.chip--orange {
+  background: var(--status-orange-bg);
+}
+
+.chip--green {
+  background: var(--status-green-bg);
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.chip:focus-visible {
+  outline: 3px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+.confirm-dialog__message {
+  margin: 0;
+}
+
+/* --- Fenster "Tests für alle setzen" ------------------------------------ */
+.bulk-dialog {
+  width: min(94vw, 38rem);
+  text-align: left;
+}
+
+.bulk-dialog__hint {
+  margin-top: 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.bulk-dialog__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.bulk-dialog__tools .field__control {
+  flex: 1 1 10rem;
+}
+
+.bulk-dialog__count {
+  margin: var(--space-2) 0;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.bulk-dialog__list {
+  max-height: 38vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  list-style: none;
+}
+
+.bulk-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 2.75rem;
+  padding: var(--space-1) var(--space-3);
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.bulk-row input {
+  flex: none;
+  width: 1.375rem;
+  height: 1.375rem;
+  accent-color: var(--color-primary);
+}
+
+.bulk-row__name {
+  flex: 1 1 auto;
+  font-family: var(--font-sans);
+  font-weight: 600;
+}
+
+.bulk-row__tests {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}

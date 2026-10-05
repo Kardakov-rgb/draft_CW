@@ -6,7 +6,7 @@
     <title>Testübersicht</title>
     <meta name="description" content="Demo: Lernverlaufsdiagnostik per QR-Code oder Direktstart" />
 
-    <!-- Stylesheets: Reihenfolge ist relevant (Fonts -> Tokens -> Base -> Layout -> Components) -->
+    <!-- Stylesheets: Reihenfolge ist relevant (Fonts -> Tokens -> Base -> Layout -> Components -> Sheet) -->
     <link
       rel="preload"
       href="assets/fonts/montserrat-latin-wght-normal.woff2"
@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/layout.css" />
     <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/sheet.css" />
   </head>
   <body>
     <header class="site-header">
@@ -38,9 +39,28 @@
     <main class="container" id="main">
       <h1>Testübersicht</h1>
       <p class="lead">
-        <span data-group-name></span>: Tests auswählen, dann QR-Code anzeigen oder Test direkt
-        starten.
+        KPF wählen, Tests auswählen, dann QR-Code anzeigen oder Test direkt starten.
       </p>
+
+      <div class="toolbar" role="group" aria-label="Ansicht">
+        <label class="field">
+          <span class="field__label">KPF</span>
+          <select class="field__control" data-kpf-select></select>
+        </label>
+        <label class="field field--grow">
+          <span class="field__label">Suche</span>
+          <input class="field__control" type="search" placeholder="Name suchen" data-search />
+        </label>
+        <label class="field">
+          <span class="field__label">Sortierung</span>
+          <select class="field__control" data-sort-select></select>
+        </label>
+      </div>
+      <div class="toolbar toolbar--secondary">
+        <div class="chips" role="group" aria-label="Filter nach Ampel" data-status-chips></div>
+        <div class="toolbar__actions" data-toolbar-actions></div>
+      </div>
+
       <div class="table-wrap" data-student-table>
         <noscript>Diese Seite benötigt JavaScript.</noscript>
       </div>
