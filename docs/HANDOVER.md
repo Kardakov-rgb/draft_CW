@@ -51,8 +51,12 @@ Diese **Demo** zeigt die gewünschte Oberfläche, damit der Dienstleister sie si
   jeder Änderung, damit Zeilen nicht springen.
 - **Bestätigung vor dem Direktstart:** Ein Fenster fragt nach ("Test für <Name> jetzt auf diesem Gerät
   starten?"). Der Fokus liegt auf "Abbrechen", Esc bricht ab.
-- **Sammelauswahl:** "Tests für alle setzen (N)" setzt die Tests für alle Kinder der **aktuellen
-  Ansicht** (nach Filter und Suche, ohne Archiv). Das Fenster nennt die Anzahl der betroffenen Kinder.
+- **Sammelauswahl:** "Tests für alle setzen" öffnet ein Fenster mit **allen Kindern der KPF** (ohne
+  Archiv). Die Testleitung wählt per Kästchen individuell, wer dazugehört (Suche im Fenster, "Alle" für die
+  gefundenen Kinder, "Keine"), und legt fest, welche Tests gesetzt werden. Zu jedem Kind stehen die aktuell
+  aktiven Tests und die Ampelfarbe. Ist auf der Seite ein Filter oder eine Suche aktiv, sind die dort
+  sichtbaren Kinder vorausgewählt, sonst ist niemand vorausgewählt. Gespeichert wird erst mit
+  "Für N Kinder speichern", Abbrechen ändert nichts.
 - **QR-Sammelblatt je Fach:** Ein druckbares Blatt mit Karten (Name, QR-Code, Gültigkeit) für alle Kinder
   der aktuellen Ansicht, die den Test ausgewählt haben. Dafür werden **länger gültige** Links angefordert
   (`purpose: "sheet"`, Demo-Annahme 8 Stunden, `LINK_VALIDITY_MINUTES` in `src/js/config.js`).

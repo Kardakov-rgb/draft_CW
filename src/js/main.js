@@ -3,10 +3,11 @@
 import { ARCHIVE_COLUMNS, COLUMNS, SUBJECTS } from "./config.js";
 import { getKpfs, getStudents } from "./data/students.js";
 import { getLastTestDates } from "./data/lastTests.js";
-import { sortStudents } from "./domain/ranking.js";
+import { overallStatus, sortStudents } from "./domain/ranking.js";
 import { filterStudents, statusCounts } from "./domain/view.js";
-import { isTestActive } from "./domain/tests.js";
+import { activeTests, isTestActive } from "./domain/tests.js";
 import { getStates, saveState } from "./services/studentStateService.js";
+import { createBulkSelectDialog } from "./components/bulkSelectDialog.js";
 import { createConfirmDialog } from "./components/confirmDialog.js";
 import { createQrDialog } from "./components/qrDialog.js";
 import { createQrSheet } from "./components/qrSheet.js";
@@ -60,6 +61,7 @@ async function init() {
   Object.assign(ctx, {
     qrDialog: createQrDialog(),
     selectDialog: createTestSelectDialog(),
+    bulkDialog: createBulkSelectDialog(),
     confirmDialog: createConfirmDialog(),
     actions: {
       saveTests: async (student, tests) => {
@@ -94,12 +96,24 @@ async function init() {
       render();
     },
     onBulkSelect: () => {
-      const targets = visible();
-      ctx.selectDialog.open({
-        title: `Tests für ${targets.length} Kinder`,
-        hint: "Überschreibt die gespeicherte Auswahl aller Kinder in der aktuellen Ansicht (Filter und Suche beachtet).",
-        currentTests: Object.keys(SUBJECTS),
-        save: async (tests) => {
+      const active = order.filter((s) => state[s.id]?.archived !== true);
+      // Ist ein Filter oder eine Suche aktiv, sind die sichtbaren Kinder vorausgewählt.
+      const filterActive = view.query.trim() !== "" || view.status !== "all";
+      ctx.bulkDialog.open({
+        students: active,
+        preselectedIds: new Set(filterActive ? visible().map((s) => s.id) : []),
+        hint:
+          (filterActive
+            ? "Vorausgewählt sind die Kinder, die gerade in der Liste sichtbar sind. "
+            : "Wähle die Kinder aus, für die die Tests gesetzt werden sollen. ") +
+          "Die bisherige Auswahl dieser Kinder wird überschrieben.",
+        describe: (student) => ({
+          tests: activeTests(student, state[student.id])
+            .map((id) => SUBJECTS[id].label)
+            .join(", "),
+          status: overallStatus(student, state[student.id], ctx.lastTests, now),
+        }),
+        save: async (targets, tests) => {
           for (const student of targets) await patch(student, { tests });
           render();
         },

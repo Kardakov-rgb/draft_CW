@@ -79,9 +79,9 @@ export function initToolbar({ kpfs, view, onChange, onBulkSelect, onSheet }) {
     });
     bulkButton.replaceChildren(
       createIcon("select"),
-      document.createTextNode(`Tests für alle setzen (${visibleCount})`),
+      document.createTextNode("Tests für alle setzen"),
     );
-    bulkButton.disabled = visibleCount === 0;
+    bulkButton.disabled = counts.all === 0;
     sheetButtons.forEach(({ label, button }) => {
       button.replaceChildren(createIcon("qr"), document.createTextNode(`QR-Sammelblatt ${label}`));
       button.disabled = visibleCount === 0;
